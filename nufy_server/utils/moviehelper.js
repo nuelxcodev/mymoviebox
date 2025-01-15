@@ -1,11 +1,11 @@
+const { API_BEARIER } = process.env;
 async function getmoviesData(page) {
   const url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc`;
   const options = {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlN2NiYWY5MzExOTQzYWY3MzU5NWE4N2ZjZjNkMjIyOCIsIm5iZiI6MTczNjA1MTI1OS42ODUsInN1YiI6IjY3N2EwYTNiOGZkNmY1MTA5ZDcyOTNjYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.PuS1GI1s_XaIVXMa_zPNCUShfywmm6F68vsHoZeCic0",
+      Authorization: API_BEARIER,
     },
   };
   try {
@@ -23,8 +23,7 @@ async function movieinfo(movie_id) {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlN2NiYWY5MzExOTQzYWY3MzU5NWE4N2ZjZjNkMjIyOCIsIm5iZiI6MTczNjA1MTI1OS42ODUsInN1YiI6IjY3N2EwYTNiOGZkNmY1MTA5ZDcyOTNjYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.PuS1GI1s_XaIVXMa_zPNCUShfywmm6F68vsHoZeCic0",
+      Authorization: API_BEARIER,
     },
   };
   try {
@@ -42,8 +41,7 @@ async function getimages(movie_id) {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlN2NiYWY5MzExOTQzYWY3MzU5NWE4N2ZjZjNkMjIyOCIsIm5iZiI6MTczNjA1MTI1OS42ODUsInN1YiI6IjY3N2EwYTNiOGZkNmY1MTA5ZDcyOTNjYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.PuS1GI1s_XaIVXMa_zPNCUShfywmm6F68vsHoZeCic0",
+      Authorization: API_BEARIER,
     },
   };
   try {
@@ -61,8 +59,7 @@ async function getmovieTrailter(movie_id) {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlN2NiYWY5MzExOTQzYWY3MzU5NWE4N2ZjZjNkMjIyOCIsIm5iZiI6MTczNjA1MTI1OS42ODUsInN1YiI6IjY3N2EwYTNiOGZkNmY1MTA5ZDcyOTNjYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.PuS1GI1s_XaIVXMa_zPNCUShfywmm6F68vsHoZeCic0",
+      Authorization: API_BEARIER,
     },
   };
   try {

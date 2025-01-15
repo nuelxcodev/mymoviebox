@@ -14,6 +14,7 @@ function Home() {
       const response = await axios.post(url, { page: nextpage });
       const result = response.data;
       setdata(result);
+      console.log(result)
     } catch (error) {
       console.error("Error fetching movies:", error);
     }
