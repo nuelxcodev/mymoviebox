@@ -7,19 +7,39 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Ignore node_modules for both frontend and backend
+nufy-server/node_modules/
+nufy-client/node_modules/
+
+# Ignore dist (build output) for both frontend and backend
+nufy-server/dist
+nufy-client/dist
+
+# Ignore environment variable files
 .env
 
-# Editor directories and files
+# Ignore coverage and test-related files
+coverage/
+*.lcov
+
+# Ignore Editor and IDE files
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+*.swp
+
+# Ignore OS-specific files
+Thumbs.db
+ehthumbs.db
+
+# Ignore Vite specific build files (in case you use Vite for the frontend)
+nufy-client/vite
+
+# Ignore any other build/output files specific to your project
+nufy-client/.vite/
+nufy-server/.env
