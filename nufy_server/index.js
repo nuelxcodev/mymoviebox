@@ -5,9 +5,9 @@ const bodypasser = express.json;
 const cors = require("cors");
 const { databaseconnection } = require("./utils/helpers");
 
-require("dotenv").config({path:'../.env'});
+require("dotenv").config({ path: "../.env" });
 
-const { PORT } = process.env;
+const PORT = process.env.PORT || 8081;
 app.use(bodypasser());
 app.use(
   cors({
@@ -22,7 +22,7 @@ app.use((req, res, next) => {
 });
 app.use("/api/v1", router);
 
-app.listen(PORT, '0.0.0.0',() => {
+app.listen(PORT, "0.0.0.0", () => {
   // databaseconnection()
   console.log(`project is now running on ${PORT}`);
 });
