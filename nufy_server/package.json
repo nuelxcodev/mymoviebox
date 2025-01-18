@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "NODE_ENV=production node index.js"
+    "build": "cross-env NODE_ENV=production node index.js"
   },
   "author": "chukwuemeka codev",
   "license": "ISC",
@@ -20,5 +20,8 @@
     "mongoose": "^8.9.4",
     "nodemailer": "^6.9.16",
     "nodemon": "^3.1.9"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }
