@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "NODE_ENV=production nodemon index.js"
+    "build": "NODE_ENV=production node index.js"
   },
   "author": "chukwuemeka codev",
   "license": "ISC",
