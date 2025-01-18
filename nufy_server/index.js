@@ -22,7 +22,7 @@ app.use((req, res, next) => {
 });
 app.use("/api/v1", router);
 
-app.listen(PORT, () => {
+app.listen(PORT, 0.0.0.0,() => {
   // databaseconnection()
   console.log(`project is now running on ${PORT}`);
 });
