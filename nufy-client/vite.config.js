@@ -11,4 +11,8 @@ export default defineConfig({
   define: {
     'process.env': process.env, // Pass environment variables to the app
   },
+  server: {
+    host: '0.0.0.0', // Make it listen on all IP addresses
+    port: process.env.PORT || 5173, // Use Render's assigned PORT or fallback to 5173
+  },
 });
