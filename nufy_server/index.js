@@ -5,7 +5,7 @@ const bodypasser = express.json;
 const cors = require("cors");
 const { databaseconnection } = require("./utils/helpers");
 
-require("dotenv").config();
+require("dotenv").config({path:'../.env'});
 
 const { PORT } = process.env;
 app.use(bodypasser());

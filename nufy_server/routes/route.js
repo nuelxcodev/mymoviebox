@@ -6,6 +6,7 @@ const {
   resetPassword,
 } = require("../appcontrollers/authntication");
 const { getTrendingmovies, gettriller } = require("../appcontrollers/movies");
+const { datas } = require("../utils/data");
 const router = Router();
 
 // authntications
