@@ -7,7 +7,7 @@ const { databaseconnection } = require("./utils/helpers");
 
 require("dotenv").config({ path: "../.env" });
 
-const PORT =  5000;
+const PORT = 5000;
 app.use(bodypasser());
 app.use(
   cors({
@@ -22,7 +22,7 @@ app.use((req, res, next) => {
 });
 app.use("/api/v1", router);
 
-app.listen(PORT, "0.0.0.0", () => {
+app.listen(PORT, () => {
   // databaseconnection()
   console.log(`project is now running on ${PORT}`);
 });
