@@ -4,6 +4,8 @@
   "version": "1.0.0",
   "main": "startApp.js",
   "scripts": {
+    "install-dependencies": "cd nufy-client && npm install && cd ../nufy_server && npm install",
+    "build": "npm run install-dependencies",
     "start": "node startApp.js "
   },
   "keywords": [],
