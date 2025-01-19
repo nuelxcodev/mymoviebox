@@ -108,7 +108,7 @@ findFreePort(parseInt(envUpdates.CLIENT_PORT), (clientFreePort) => {
       // Wait for both client and server to start and update URLs in .env file
       setTimeout(() => {
         const clientURL = `http://${envUpdates.CLIENT_HOST}:${envUpdates.CLIENT_PORT}`;
-        const serverURL = `http://${envUpdates.SERVER_HOST}:${envUpdates.SERVER_PORT}`;
+        const serverURL = `http://${envUpdates.SERVER_HOST}:${envUpdates.SERVER_PORT}/api/v1`;
 
         // Update URLs in .env
         const updatedEnv = {
