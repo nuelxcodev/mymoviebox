@@ -19,4 +19,10 @@ router.route("/resetPassword").post(resetPassword);
 router.route("/movies").post(getTrendingmovies);
 router.route("/watchtriller").post(gettriller);
 
+router.get('/test',(req,res)=>{
+  res.status(200).json({
+    message: " router is working very fine"
+  })
+})
+
 module.exports = router;
