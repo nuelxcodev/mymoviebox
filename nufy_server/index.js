@@ -34,7 +34,7 @@ app.get("/api/v1", (req, res) => {
 });
 
 // Serve Static Files for Frontend
-const frontendPath = path.join(__dirname, "../dist");
+const frontendPath = path.join(__dirname, "../nufy-client/dist");
 app.use(express.static(frontendPath));
 
 // Fallback Route for SPA
