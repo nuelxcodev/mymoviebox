@@ -25,13 +25,8 @@ function movie_link_data(info) {
     overview: info.overview,
     popularity: info.popularity,
     poster_path: `https://image.tmdb.org/t/p/w500${info.poster_path}`,
-    production_companies: (info.production_companies || []).map((com) => {
-      return {
-        logo_path: `https://image.tmdb.org/t/p/w500${com.logo_path}`,
-        name: com.name,
-      };
-    }),
-
+    production_companies: info.production_companies,
+    production_countries: info.production_countries,
     release_date: info.release_date,
     runtime: info.runtime,
     spoken_languages: info.spoken_languages,
@@ -57,7 +52,7 @@ function trailer_links_objects(data) {
 
 function movie_images_links(data) {
   return {
-    backdrops: (data.backdrops || []).map((bg) => {
+    backdrops: data.backdrops.map((bg) => {
       return {
         aspect_ratio: bg.aspect_ratio,
         file_path: `https://image.tmdb.org/t/p/w500${bg.file_path}`,
@@ -65,7 +60,7 @@ function movie_images_links(data) {
         width: bg.width,
       };
     }),
-    logos: (data.logos || []).map((bg) => {
+    logos: data.logo.map((bg) => {
       return {
         aspect_ratio: bg.aspect_ratio,
         file_path: `https://image.tmdb.org/t/p/w500${bg.file_path}`,
@@ -73,7 +68,7 @@ function movie_images_links(data) {
         width: bg.width,
       };
     }),
-    posters: (data.posters || []).map((bg) => {
+    posters: data.posters.map((bg) => {
       return {
         aspect_ratio: bg.aspect_ratio,
         file_path: `https://image.tmdb.org/t/p/w500${bg.file_path}`,
@@ -84,9 +79,4 @@ function movie_images_links(data) {
   };
 }
 
-module.exports = {
-  movie_detail_data,
-  movie_link_data,
-  trailer_links_objects,
-  movie_images_links,
-};
+module.exports = { movie_detail_data, movie_link_data, trailer_links_objects };
