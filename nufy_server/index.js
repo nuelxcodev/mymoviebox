@@ -3,7 +3,7 @@ const router = require("./routes/route");
 const app = express();
 const cors = require("cors");
 const path = require("path"); // Import `path` at the
-const { databaseconnection } = require("./utils/helpers");
+// const { databaseconnection } = require("./utils/helpers");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") }); // Use `path` correctly
 
 // Environment Variables
