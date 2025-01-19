@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 require("dotenv").config({path: process.DOTENV_CONFIG_PATH || '../.env'})
-const { MONGO_URI, API_BEARIER } = process.env;
+// const { MONGO_URI, API_BEARIER } = process.env;
 
 // db connection function
-async function databaseconnection() {
-  const connection = await mongoose.connect(MONGO_URI);
-  connection && console.log("database connectted succeesfully");
-}
+// async function databaseconnection() {
+//   const connection = await mongoose.connect(MONGO_URI);
+//   connection && console.log("database connectted succeesfully");
+// }
 
 // data hashing function
 function hasher(data) {
