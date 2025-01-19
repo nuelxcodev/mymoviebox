@@ -43,7 +43,7 @@ app.get("*", (req, res) => {
 });
 
 // Database Connection and Server Start
-databaseconnection(); // Ensure database connection is successful
+// databaseconnection(); // Ensure database connection is successful
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`Client is accessible at ${CLIENT_URL}`);
