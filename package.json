@@ -4,12 +4,7 @@
   "version": "1.0.0",
   "main": "startApp.js",
   "scripts": {
-    "install-dependencies": "cd nufy-client && npm install && cd ../nufy_server && npm install",
-    "start": "node startApp.js ",
-    "build-client": "cd nufy-client && npm run build",
-    "build-server": "cd nufy_server && npm run build",
-    "build": "npm run install-dependencies",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node startApp.js "
   },
   "keywords": [],
   "author": "ekine chukwuemeka emmanuel",
