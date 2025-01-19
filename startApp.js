@@ -9,7 +9,7 @@ const envPath = path.resolve(__dirname, ".env");
 // Environment variables to update (without client and server URLs)
 const envUpdates = {
   CLIENT_HOST: "0.0.0.0",
-  CLIENT_PORT: "8081", // Changed client port to 8081
+  CLIENT_PORT: "8081", // Starting port for client
   SERVER_HOST: "0.0.0.0",
   SERVER_PORT: "5000", // Changed server port to 5000
 };
@@ -53,16 +53,24 @@ function checkPortInUse(port, callback) {
   server.listen(port);
 }
 
-// Check if the client port is free
-checkPortInUse(envUpdates.CLIENT_PORT, (clientPortInUse) => {
-  if (clientPortInUse) {
-    console.error(
-      `Port ${envUpdates.CLIENT_PORT} is already in use for the client.`
-    );
-    process.exit(1);
-  } else {
-    console.log(`Port ${envUpdates.CLIENT_PORT} is free for the client.`);
-  }
+// Automatically find a free port starting from the provided port number
+function findFreePort(startPort, callback) {
+  let port = startPort;
+  checkPortInUse(port, (inUse) => {
+    if (inUse) {
+      console.log(`Port ${port} is already in use, trying the next one.`);
+      findFreePort(port + 1, callback); // Try the next port
+    } else {
+      callback(port); // Port is free
+    }
+  });
+}
+
+// Find a free port for the client
+findFreePort(parseInt(envUpdates.CLIENT_PORT), (clientFreePort) => {
+  envUpdates.CLIENT_PORT = clientFreePort;
+
+  console.log(`Port ${envUpdates.CLIENT_PORT} is free for the client.`);
 
   // Check if the server port is free
   checkPortInUse(envUpdates.SERVER_PORT, (serverPortInUse) => {
