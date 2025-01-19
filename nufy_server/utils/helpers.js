@@ -38,4 +38,4 @@ async function responsed(url) {
   }
 }
 
-module.exports = { databaseconnection, hasher, confirmEmail, responsed };
+module.exports = {  hasher, confirmEmail, responsed };
