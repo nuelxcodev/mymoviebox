@@ -6,13 +6,10 @@ const net = require("net");
 // Path to the .env file
 const envPath = path.resolve(__dirname, ".env");
 
-// Environment variables to update
+// Environment variables to update (without client and server URLs)
 const envUpdates = {
-  VITE_API_URL: "http://localhost:5000/api/v1",
-  VITE_API_PIC_URL: "http://image.tmdb.org/t/p/w500/",
   CLIENT_HOST: "0.0.0.0",
   CLIENT_PORT: "8081", // Changed client port to 8081
-  CLIENT_URL: "http://localhost:5173",
   SERVER_HOST: "0.0.0.0",
   SERVER_PORT: "5000", // Changed server port to 5000
 };
@@ -59,24 +56,25 @@ function checkPortInUse(port, callback) {
 // Check if the client port is free
 checkPortInUse(envUpdates.CLIENT_PORT, (clientPortInUse) => {
   if (clientPortInUse) {
-    console.error(`Port ${envUpdates.CLIENT_PORT} is already in use for the client.`);
+    console.error(
+      `Port ${envUpdates.CLIENT_PORT} is already in use for the client.`
+    );
     process.exit(1);
   } else {
     console.log(`Port ${envUpdates.CLIENT_PORT} is free for the client.`);
   }
-  
+
   // Check if the server port is free
   checkPortInUse(envUpdates.SERVER_PORT, (serverPortInUse) => {
     if (serverPortInUse) {
-      console.error(`Port ${envUpdates.SERVER_PORT} is already in use for the server.`);
+      console.error(
+        `Port ${envUpdates.SERVER_PORT} is already in use for the server.`
+      );
       process.exit(1);
     } else {
       console.log(`Port ${envUpdates.SERVER_PORT} is free for the server.`);
-      
-      // Update the .env file
-      updateEnvFile(envPath, envUpdates);
 
-      // Run Client on CLIENT_HOST and CLIENT_PORT
+      // Start Client and Server and update URLs after they start
       const client = exec("npm run dev", {
         cwd: "./nufy-client",
         env: {
@@ -88,7 +86,6 @@ checkPortInUse(envUpdates.CLIENT_PORT, (clientPortInUse) => {
       client.stdout.pipe(process.stdout);
       client.stderr.pipe(process.stderr);
 
-      // Run Server on SERVER_HOST and SERVER_PORT
       const server = exec("npm run dev", {
         cwd: "./nufy_server",
         env: {
@@ -100,15 +97,38 @@ checkPortInUse(envUpdates.CLIENT_PORT, (clientPortInUse) => {
       server.stdout.pipe(process.stdout);
       server.stderr.pipe(process.stderr);
 
-      // Build Client Application
-      const clientBuild = exec("npm run build", { cwd: "./nufy-client" });
-      clientBuild.stdout.on("data", (data) => process.stdout.write(`[Client Build]: ${data}`));
-      clientBuild.stderr.on("data", (data) => process.stderr.write(`[Client Build Error]: ${data}`));
+      // Wait for both client and server to start and update URLs in .env file
+      setTimeout(() => {
+        const clientURL = `http://${envUpdates.CLIENT_HOST}:${envUpdates.CLIENT_PORT}`;
+        const serverURL = `http://${envUpdates.SERVER_HOST}:${envUpdates.SERVER_PORT}`;
 
-      // Build Server Application
-      const serverBuild = exec("npm run build", { cwd: "./nufy_server" });
-      serverBuild.stdout.on("data", (data) => process.stdout.write(`[Server Build]: ${data}`));
-      serverBuild.stderr.on("data", (data) => process.stderr.write(`[Server Build Error]: ${data}`));
+        // Update URLs in .env
+        const updatedEnv = {
+          ...envUpdates,
+          CLIENT_URL: clientURL, // Client URL
+          VITE_API_URL: serverURL, // Server API URL
+        };
+
+        updateEnvFile(envPath, updatedEnv);
+
+        // Build Client Application
+        const clientBuild = exec("npm run build", { cwd: "./nufy-client" });
+        clientBuild.stdout.on("data", (data) =>
+          process.stdout.write(`[Client Build]: ${data}`)
+        );
+        clientBuild.stderr.on("data", (data) =>
+          process.stderr.write(`[Client Build Error]: ${data}`)
+        );
+
+        // Build Server Application
+        const serverBuild = exec("npm run build", { cwd: "./nufy_server" });
+        serverBuild.stdout.on("data", (data) =>
+          process.stdout.write(`[Server Build]: ${data}`)
+        );
+        serverBuild.stderr.on("data", (data) =>
+          process.stderr.write(`[Server Build Error]: ${data}`)
+        );
+      }, 5000); // Wait for 5 seconds for both client and server to start
     }
   });
 });
