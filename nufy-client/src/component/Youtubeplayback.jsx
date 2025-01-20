@@ -8,7 +8,7 @@ function VideoPlayer({ videoId }) {
   };
 
   return (
-    <div className=" w-full">
+    <div className=" w-full h-full">
       {error ? (
         <div style={{ textAlign: "center" }}>
           <h1>An error occurred</h1>

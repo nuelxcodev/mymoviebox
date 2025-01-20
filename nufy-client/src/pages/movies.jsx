@@ -6,7 +6,7 @@ import VideoPlayer from "../component/Youtubeplayback";
 import Image from "../component/Image";
 import { moviesthriller } from "../utils/appdatas/ApiResponse";
 
-function Trailerpage() {
+function Trailerpage({ data }) {
   const [information, setinformation] = useState({});
   const [trailer, setrailer] = useState({});
   const [images, setimages] = useState({ bg: [], poster: [] });
@@ -15,11 +15,13 @@ function Trailerpage() {
   const movieId = searchParams.get("movies") | null;
   const navigate = useNavigate();
 
+  const movie =data.movies.find((movie) => movie.id === movieId);
+
   useEffect(() => {
     if (movieId === null || movieId === 0) {
       return navigate("/");
     }
-    moviesthriller({ setimages, movieId, setinformation, setrailer });
+    // moviesthriller({ movieId });
   }, [movieId]);
 
 
@@ -28,39 +30,38 @@ function Trailerpage() {
       <Nav />
       {trailer ? (
         <div>
-          <div className=" w-full flex p-5">
+          <div className=" w-full flex flex-col md:flex-row md:p-5">
             <VideoPlayer videoId={trailer[trailer.length - 1]?.key} />
-            <div className=" w-1/2 p-8">
-              <h1 className=" text-2xl font-extrabold">
-                {information.original_title}
-              </h1>
-              <p>{information.overview}</p>
+            <div className=" md:w-1/2 md:p-8 p-2">
+              <div>
+                <h1 className=" text-3xl font-extrabold">
+                  {movie?.original_title}
+                </h1>
+                <p>{movie?.overview}</p>
+              </div>
+              <div className=" flex flex-row my-7 dark:bg-white md:p-4">
+                {movie?.production_companies?.map(
+                  (con) =>
+                    con?.logo_path !== null && (
+                      <div
+                        key={con.id}
+                        className="w-[110px] md:w-[35px] flex-shrink-0 "
+                      >
+                        <Image url={con?.logo_path} />
+                      </div>
+                    )
+                )}
+              </div>
             </div>
           </div>
-
-          {/* display images */}
-          {images.bg && images.bg.length > 0 && (
-            <div className="flex w-max mt-3">
-              {images.bg[0]?.file_path && (
-                <div className="h-52 w-auto">
-                  <Image url={images.bg[0].file_path} />
+          <div className=" flex overflow-x-auto scrollbar-hide">
+            {movie?.backdrops
+              ?.slice(0, movie?.backdrops.length - 2)
+              .map((mov) => (
+                <div key={mov.id} className=" h-[200px] flex-shrink-0 ">
+                  <Image url={mov?.file_path} />
                 </div>
-              )}
-              {images.bg[2]?.file_path && (
-                <div className="h-52 w-auto">
-                  <Image url={images.bg[2].file_path} />
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* companies */}
-          <div className=" flex mt-8 w-max gap-4">
-            {information.production_companies?.map((con) => (
-              <div className=" h-7 " id={con?.id}>
-                <Image url={con?.logo_path} />
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       ) : (

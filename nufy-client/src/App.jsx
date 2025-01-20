@@ -3,12 +3,29 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Trailerpage from "./pages/movies";
+import axios from "axios";
 
-console.log(import.meta.env.VITE_API_URL)
+console.log(import.meta.env.VITE_API_URL);
 function App() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [data, setData] = useState({ movies: [], genre: [] });
 
- 
+  const [nextPage, setNextPage] = useState(1);
+
+  async function fetchMovies() {
+    const url = `${import.meta.env.VITE_API_URL}/movies`;
+    try {
+      const response = await axios.post(url, { page: nextPage });
+      const { movies, genre } = response.data;
+      setData({ movies, genre });
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+    }
+  }
+  useEffect(() => {
+    fetchMovies();
+  }, [nextPage]);
+
   useEffect(() => {
     const handleOnlineStatus = () => setIsOnline(navigator.onLine);
 
@@ -25,7 +42,9 @@ function App() {
   const Router = createBrowserRouter([
     {
       path: "/",
-      element: <Home />,
+      element: (
+        <Home onNextpage={setNextPage} data={data} nextPage={nextPage} />
+      ),
     },
     {
       path: "/signup",
@@ -33,7 +52,7 @@ function App() {
     },
     {
       path: "/movies",
-      element: <Trailerpage />,
+      element: <Trailerpage data={data} />,
     },
   ]);
 

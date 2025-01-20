@@ -1,15 +1,10 @@
-const {
-  movie_detail_data,
-  trailer_links_objects,
-  movie_link_data,
-  movie_images_links,
-} = require("../utils/dataobjects.js");
+const { movie_detail_data } = require("../utils/dataobjects.js");
 const {
   movieinfo,
-  getmovieTrailter,
   getimages,
   getmoviesData,
   getgenre,
+  getmovieTrailter,
 } = require("../utils/movie_datas_api.js");
 
 async function getTrendingmovies(req, res) {
@@ -18,32 +13,39 @@ async function getTrendingmovies(req, res) {
   try {
     const genre = await getgenre();
     const movies = await getmoviesData(page);
-    const detail = movies.results.map((movie) => movie_detail_data(movie));
-    return res.status(200).json({ movies: detail , genre });
+
+    const detail = await Promise.all(
+      movies.results.map(async (movie) => {
+        const moviesimage = await getimages(movie.id);
+        const moviesinfo = await movieinfo(movie.id);
+        return movie_detail_data({
+          data: movie,
+          image: moviesimage,
+          info: moviesinfo,
+        });
+      })
+    );
+
+    return res.status(200).json({ movies: detail, genre });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
-      message: "an erro occured" || error,
+      message: "An error occurred",
+      error: error.message || error,
     });
   }
 }
+
 async function gettriller(req, res) {
   const { movie_id } = req.body;
   try {
-    const moviesinfo = await movieinfo(movie_id);
-    const moviesimage = await getimages(movie_id);
-
     const trailers_gotten = await getmovieTrailter(movie_id);
     const movies_trailer_links = trailers_gotten.results
       .map((result) => trailer_links_objects(result))
       .filter((element) => element !== null);
-
     const data = {
       trailer: movies_trailer_links,
-      info: movie_link_data(moviesinfo) || {},
-      image: movie_images_links(moviesimage) || {},
     };
-
     return res.status(200).json(data);
   } catch (error) {
     res.status(500).json({

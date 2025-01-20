@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 * {
-  max-width: 1538px;
+  max-width: 1858px;
   font-family: poppins;
   font-weight: 400;
   margin: auto;
@@ -59,13 +59,13 @@ nav ul li {
   animation-range: entry 0 cover 30%;
 }
 
-.branding_movie_list {
+/* .branding_movie_list {
   display: flex;
   gap: 4px;
-  width: calc( 160px * 3);
+  width: min(cal(160 /3)px, 9%);
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
-}
+} */
 /* Hide scrollbar while allowing scrolling */
 .scrollbar-hide {
   -ms-overflow-style: none;
@@ -74,4 +74,23 @@ nav ul li {
 .scrollbar-hide::-webkit-scrollbar,
 .branding_movie_list::-webkit-scrollbar {
   display: none; /* Chrome, Safari, and Opera */
+}
+.branding_movie_list {
+  @apply md:w-full w-[90%];
+  display: flex;
+  gap: 16px;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+}
+
+.branding_movie_list > * {
+  @apply md:mx-[11px] mx-[4px];
+  flex-shrink: 0;
+
+  scroll-snap-align: center;
+  transition: transform 0.3s ease, margin 0.3s ease;
+}
+
+.branding_movie_list > .scaled {
+  @apply transform md:scale-[1.54] md:mx-[16px] transition-all ease-in-out scale-[1.3];
 }

@@ -6,28 +6,11 @@ import Nav from "../component/Nav";
 
 console.log(import.meta.env.VITE_API_URL)
 
-function Home() {
-  const [data, setData] = useState({ movies: [], genre: [] });
-  const [nextPage, setNextPage] = useState(1);
+function Home({onNextpage, data , nextPage}) {
+  
+  const movie_card_container = useRef(null);
   const [genre, setgenre] = useState();
 
-  const movie_card_container = useRef(null);
-
-  async function fetchMovies() {
-    const url = `${import.meta.env.VITE_API_URL}/movies`;
-    try {
-      const response = await axios.post(url, { page: nextPage });
-      const { movies, genre } = response.data;
-      setData({ movies, genre });
-      console.log(result);
-    } catch (error) {
-      console.error("Error fetching movies:", error);
-    }
-  }
-  console.log(genre);
-  useEffect(() => {
-    fetchMovies();
-  }, [nextPage]);
 
   if (movie_card_container.current) {
     console.log(movie_card_container.current.clientHeight);
@@ -76,14 +59,14 @@ function Home() {
                 <div className="flex m-0 gap-[20%] w-full justify-center ">
                   <button
                     className="px-4 py-2 bg-yellow-500 text-black w-36"
-                    onClick={() => setNextPage((curr) => Math.max(curr - 1, 1))}
+                    onClick={() => onNextpage((curr) => Math.max(curr - 1, 1))}
                     disabled={nextPage <= 1} // Disable previous button if on the first page
                   >
                     Previous
                   </button>
                   <button
                     className="px-4 py-2 bg-yellow-500 text-black w-36"
-                    onClick={() => setNextPage((curr) => curr + 1)}
+                    onClick={() => onNextpage((curr) => curr + 1)}
                     disabled={data.movies.length === 0} // Disable next button if no more movies
                   >
                     Next

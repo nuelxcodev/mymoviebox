@@ -1,6 +1,5 @@
 import React from "react";
 
-const { VITE_API_PIC_URL } = import.meta.env;
 
 function Image({ url }) {
   if (url !== null)
@@ -8,7 +7,7 @@ function Image({ url }) {
       <img
         src={url}
         alt="images"
-        className=" h-full w-full"
+        className=" h-full w-full object-cover"
       />
     );
 }
