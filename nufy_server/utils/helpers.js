@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-require("dotenv").config({path: process.DOTENV_CONFIG_PATH || '../.env'})
+require("dotenv").config({ path: process.DOTENV_CONFIG_PATH || "../.env" });
 // const { MONGO_URI, API_BEARIER } = process.env;
 
 // db connection function
@@ -26,7 +26,7 @@ async function responsed(url) {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization: API_BEARIER,
+      Authorization: process.env.API_BEARIER,
     },
   };
   try {
@@ -38,4 +38,4 @@ async function responsed(url) {
   }
 }
 
-module.exports = {  hasher, confirmEmail, responsed };
+module.exports = { hasher, confirmEmail, responsed };

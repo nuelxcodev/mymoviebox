@@ -4,6 +4,8 @@ import Card from "../component/Card";
 import Branding from "../component/Branding";
 import Nav from "../component/Nav";
 
+console.log(import.meta.env.VITE_API_URL)
+
 function Home() {
   const [data, setData] = useState({ movies: [], genre: [] });
   const [nextPage, setNextPage] = useState(1);

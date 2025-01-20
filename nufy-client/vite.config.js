@@ -23,7 +23,8 @@ import dotenv from 'dotenv';
 import path from 'path';
 
 // Load the .env file from the root directory
-dotenv.config({ path: path.resolve(__dirname, '.env') }); // Ensure correct path for .env file
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
+
 
 export default defineConfig({
   plugins: [react()],
