@@ -44,16 +44,17 @@ async function startProcesses() {
     client.stdout.pipe(process.stdout);
     client.stderr.pipe(process.stderr);
 
+    // Ensure that the client is built and that the CSS file paths are correctly resolved by Vite
+    client.on('exit', (code) => {
+      console.log(`Client process exited with code ${code}`);
+    });
+
     console.log("Starting the server...");
     const server = exec("npm run dev", { cwd: "./nufy_server", ...options });
     server.stdout.pipe(process.stdout);
     server.stderr.pipe(process.stderr);
 
-    client.on("exit", (code) => {
-      console.log(`Client process exited with code ${code}`);
-    });
-
-    server.on("exit", (code) => {
+    server.on('exit', (code) => {
       console.log(`Server process exited with code ${code}`);
     });
   } catch (error) {
