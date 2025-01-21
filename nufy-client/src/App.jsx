@@ -7,7 +7,8 @@ import axios from "axios";
 
 console.log(import.meta.env.VITE_API_URL);
 function App() {
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  // const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [isOnline, setIsOnline] = useState(true);
   const [data, setData] = useState({ movies: [], genre: [] });
 
   const [nextPage, setNextPage] = useState(1);

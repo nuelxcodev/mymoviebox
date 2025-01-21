@@ -26,6 +26,9 @@ function ensureFrontendBuild() {
     });
   } else {
     console.log("Frontend build exists. Skipping build step.");
+    const client = exec("npm run dev", { cwd: "./nufy-client", ...options });
+    client.stdout.pipe(process.stdout);
+    client.stderr.pipe(process.stderr);
     return Promise.resolve();
   }
 }
@@ -36,15 +39,13 @@ async function startProcesses() {
     const envPath = path.resolve(__dirname, ".env");
     const options = { env: { ...process.env, DOTENV_CONFIG_PATH: envPath } };
 
-    // Ensure the frontend is built before starting processes
     await ensureFrontendBuild();
-
     console.log("Starting the client...");
     const client = exec("npm run dev", { cwd: "./nufy-client", ...options });
     client.stdout.pipe(process.stdout);
     client.stderr.pipe(process.stderr);
 
-    // Ensure that the client is built and that the CSS file paths are correctly resolved by Vite
+   
     client.on('exit', (code) => {
       console.log(`Client process exited with code ${code}`);
     });
@@ -63,5 +64,5 @@ async function startProcesses() {
   }
 }
 
-// Run the start processes function
+
 startProcesses();

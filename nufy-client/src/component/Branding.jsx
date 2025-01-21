@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-
 import Image from "./Image";
 import { moviesthriller } from "../utils/appdatas/ApiResponse";
 
@@ -9,6 +8,8 @@ function Branding({ data }) {
 
   const brand_movie_cont = useRef(null);
   const cont_elem = brand_movie_cont.current;
+
+  console.log(data)
 
   useEffect(() => {
     if (cont_elem) {
@@ -38,7 +39,6 @@ function Branding({ data }) {
         }
       };
       cont_elem.addEventListener("scroll", handleScroll);
-
       return () => {
         cont_elem.removeEventListener("scroll", handleScroll);
       };
@@ -48,7 +48,7 @@ function Branding({ data }) {
   return (
     <div className="relative w-full p-9 h-[75vh] max-h-[1000px] ">
       <div className="absolute inset-0 h-full w-full z-10">
-        {backdrops && <Image url={backdrops[(backdrops.length-1)-1]?.file_path || null} />}
+        {backdrops && <Image url={backdrops[(backdrops.length-1)-1]?.file_path || data.movies[0]?.backdrops[0]?.file_path} />}
       </div>
       <div
         className="bg-gradient-to-tr from-red-800 via-neutral-800/70 to-neutral-800/50 absolute h-full w-full inset-0 z-20"
