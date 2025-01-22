@@ -9,8 +9,6 @@ function Branding({ data }) {
   const brand_movie_cont = useRef(null);
   const cont_elem = brand_movie_cont.current;
 
-  console.log(data)
-
   useEffect(() => {
     if (cont_elem) {
       const handleScroll = () => {
@@ -46,7 +44,7 @@ function Branding({ data }) {
   }, [cont_elem, isActive]);
 
   return (
-    <div className="relative w-full p-9 h-[75vh] max-h-[1000px] ">
+    <div className="relative w-full p-9 h-[85vh] max-h-[1200px] ">
       <div className="absolute inset-0 h-full w-full z-10">
         {backdrops && <Image url={backdrops[(backdrops.length-1)-1]?.file_path || data.movies[0]?.backdrops[0]?.file_path} />}
       </div>

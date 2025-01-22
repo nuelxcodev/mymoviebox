@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
@@ -19,6 +19,7 @@ function App() {
       const response = await axios.post(url, { page: nextPage });
       const { movies, genre } = response.data;
       setData({ movies, genre });
+      console.log(response)
     } catch (error) {
       console.error("Error fetching movies:", error);
     }
@@ -39,12 +40,16 @@ function App() {
     };
   }, []);
 
+
+  const currwindow = useRef(null)
+  console.log(currwindow)
+
   // Router configuration
   const Router = createBrowserRouter([
     {
       path: "/",
       element: (
-        <Home onNextpage={setNextPage} data={data} nextPage={nextPage} />
+        <Home onNextpage={setNextPage} data={data} nextPage={nextPage}  curr={currwindow}/>
       ),
     },
     {

@@ -26,9 +26,6 @@ function ensureFrontendBuild() {
     });
   } else {
     console.log("Frontend build exists. Skipping build step.");
-    const client = exec("npm run dev", { cwd: "./nufy-client", ...options });
-    client.stdout.pipe(process.stdout);
-    client.stderr.pipe(process.stderr);
     return Promise.resolve();
   }
 }
